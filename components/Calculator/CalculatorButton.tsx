@@ -1,42 +1,42 @@
 import * as React from "react";
 import { Button, ButtonProps } from "react-native-paper";
 import { paletteColors } from "../../constants/palette";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from "react-native";
 
-type CalculatorButtonProps = {
-  variant?: "operate" | "digit" | "result";
-} & ButtonProps;
+interface CalculatorButtonProps extends TouchableOpacityProps {
+  isEqualButton?: boolean;
+}
 
 export const CalculatorButton = ({
   children,
-  variant = "digit",
+  isEqualButton = false,
   ...props
 }: CalculatorButtonProps) => {
-  const variantButtonStyles = {
-    operate: {
-      backgroundColor: paletteColors.black,
-      textColor: "#fff",
-      borderRadius: 2,
-    },
-    digit: {
-      backgroundColor: paletteColors.primary,
-      textColor: "#fff",
-      borderRadius: 2,
-    },
-    result: {
-      backgroundColor: paletteColors.secondary,
-      textColor: "#fff",
-      borderRadius: 2,
-    },
-  };
-
   return (
-    <Button
-      textColor={variantButtonStyles[variant].textColor}
-      style={variantButtonStyles[variant]}
+    <TouchableOpacity
       {...props}
-      mode="contained"
+      style={[styles.button, isEqualButton && styles.equalButton]}
     >
       {children}
-    </Button>
+    </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: "22%",
+    aspectRatio: 1,
+    borderRadius: 40,
+    backgroundColor: paletteColors.secondary,
+    margin: 4,
+  },
+  equalButton: {
+    backgroundColor: paletteColors.primary,
+  },
+});
